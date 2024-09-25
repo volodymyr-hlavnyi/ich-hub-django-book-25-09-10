@@ -50,7 +50,7 @@ class Author(models.Model):
 
 class Publisher(models.Model):
     name = models.CharField(max_length=75)
-    register_date = models.DateField(auto_now_add = True)
+    established_date = models.DateField(auto_now_add = True)
 
     def __str__(self):
         return self.name
@@ -58,12 +58,14 @@ class Publisher(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.CharField(max_length = 40, null = True)
     published_date = models.DateField(verbose_name='publication_date')
     registered = models.BooleanField(null=True)
     managed = models.BooleanField(null=True)
-    publisher_id = models.ForeignKey(Publisher, on_delete = models.CASCADE, related_name = 'books', null = True)
-
+    page_count = models.IntegerField(null=True)
+    price = models.IntegerField(null=True)
+    discounted_price = models.IntegerField(null=True)
+    publisher  = models.ForeignKey(Publisher, null=True, on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -83,7 +85,6 @@ class Book(models.Model):
 ]
         verbose_name = 'fiction book'  # Человекочитаемое имя модели
         verbose_name_plural = 'fiction books'  # Человекочитаемое множественное число имени модели
-
 
 
 
